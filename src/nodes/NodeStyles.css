@@ -1,0 +1,180 @@
+.custom-node {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.custom-node.selected {
+  border-color: #6D9DFF;
+  box-shadow: 0 4px 12px rgba(109, 157, 255, 0.3);
+}
+
+.custom-node:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Start Badge */
+.start-badge {
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  background: #6D9DFF;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Node Header */
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.node-icon {
+  font-size: 18px;
+}
+
+.node-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #2d3748;
+}
+
+/* Level Node */
+.level-node {
+  border-color: #6D9DFF;
+}
+
+.level-type {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.level-icon {
+  font-size: 14px;
+}
+
+.level-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.level-steps {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.step-badge {
+  font-size: 16px;
+  cursor: help;
+}
+
+/* Condition Node */
+.condition-node {
+  border-color: #FFB648;
+  min-width: 220px;
+}
+
+.condition-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.condition-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.condition-branch {
+  position: relative;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 3px solid #68CD86;
+}
+
+.else-branch {
+  border-left-color: #6D9DFF;
+}
+
+.branch-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.branch-condition {
+  font-size: 12px;
+  color: #2d3748;
+}
+
+.branch-handle {
+  background: #68CD86 !important;
+}
+
+.else-handle {
+  background: #6D9DFF !important;
+}
+
+/* Action Node */
+.action-node {
+  border-color: #68CD86;
+}
+
+.action-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.action-item {
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.action-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 4px;
+}
+
+.action-value {
+  font-size: 11px;
+  color: #666;
+}
+
+/* Node Handles */
+.node-handle {
+  width: 12px;
+  height: 12px;
+  background: #6D9DFF;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
