@@ -16,6 +16,7 @@ import ActionNode from './nodes/ActionNode';
 import Sidebar from './components/Sidebar';
 import Toolbar from './components/Toolbar';
 import ExecutionDemo from './components/ExecutionDemo';
+import NodeEditor from './components/NodeEditor';
 import './App.css';
 
 const nodeTypes = {
@@ -142,6 +143,7 @@ function WorkflowBuilder() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState(null);
   const [showExecutionDemo, setShowExecutionDemo] = useState(false);
+  const [showNodeEditor, setShowNodeEditor] = useState(false);
 
   // Handle connection between nodes
   const onConnect = useCallback(
@@ -186,6 +188,23 @@ function WorkflowBuilder() {
   const onNodeClick = useCallback((event, node) => {
     setSelectedNode(node);
   }, []);
+
+  // Node double-click handler - open editor
+  const onNodeDoubleClick = useCallback((event, node) => {
+    setSelectedNode(node);
+    setShowNodeEditor(true);
+  }, []);
+
+  // Update node data
+  const onUpdateNode = useCallback((nodeId, newData) => {
+    setNodes((nds) =>
+      nds.map((node) =>
+        node.id === nodeId
+          ? { ...node, data: newData }
+          : node
+      )
+    );
+  }, [setNodes]);
 
   // Save workflow
   const onSave = useCallback(() => {
@@ -280,6 +299,7 @@ function WorkflowBuilder() {
         onAnalyze={onAnalyze}
         onDelete={onDeleteNode}
         onTestExecute={onTestExecute}
+        onEdit={() => setShowNodeEditor(true)}
         selectedNode={selectedNode}
       />
 
@@ -294,6 +314,7 @@ function WorkflowBuilder() {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             onNodeClick={onNodeClick}
+            onNodeDoubleClick={onNodeDoubleClick}
             nodeTypes={nodeTypes}
             fitView
             snapToGrid
@@ -319,6 +340,14 @@ function WorkflowBuilder() {
         <ExecutionDemo
           workflow={{ nodes, edges }}
           onClose={() => setShowExecutionDemo(false)}
+        />
+      )}
+
+      {showNodeEditor && selectedNode && (
+        <NodeEditor
+          selectedNode={selectedNode}
+          onUpdateNode={onUpdateNode}
+          onClose={() => setShowNodeEditor(false)}
         />
       )}
     </div>

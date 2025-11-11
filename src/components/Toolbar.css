@@ -2,10 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
+  padding: 14px 24px;
   background: white;
-  border-bottom: 1px solid #e0e0e0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 10;
 }
 
 .toolbar-left {
@@ -17,34 +19,51 @@
 .toolbar-left h1 {
   font-size: 20px;
   font-weight: 700;
-  color: #2d3748;
+  color: #212529;
+  margin: 0;
+  letter-spacing: -0.3px;
 }
 
 .badge {
-  padding: 4px 8px;
-  background: #6D9DFF;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #6D9DFF 0%, #5B8FEF 100%);
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(109, 157, 255, 0.2);
 }
 
 .toolbar-right {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .btn {
-  padding: 8px 16px;
+  padding: 10px 18px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  min-height: 40px;
+  height: 40px;
+  white-space: nowrap;
+  font-family: inherit;
+  box-sizing: border-box;
+  vertical-align: middle;
+  line-height: 1;
+  margin: 0;
 }
 
 .btn:hover {
@@ -69,21 +88,44 @@
 }
 
 .btn-secondary {
-  background: #f8f9fa;
-  color: #2d3748;
-  border: 1px solid #e0e0e0;
+  background: white;
+  color: #495057;
+  border: 2px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .btn-secondary:hover {
-  background: #e9ecef;
+  background: #f8f9fa;
   border-color: #6D9DFF;
+  color: #2d3748;
 }
 
 .btn-danger {
-  background: #ff6b6b;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
   color: white;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
 }
 
 .btn-danger:hover {
-  background: #ff5252;
+  background: linear-gradient(135deg, #ff5252 0%, #ee4444 100%);
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.4);
+}
+
+/* Fix for label button (Load) to align with other buttons */
+label.btn {
+  margin: 0;
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+label.btn input[type="file"] {
+  display: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
 }

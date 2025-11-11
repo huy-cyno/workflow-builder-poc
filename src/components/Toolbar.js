@@ -1,7 +1,7 @@
 import React from 'react';
 import './Toolbar.css';
 
-function Toolbar({ onSave, onLoad, onAnalyze, onDelete, onTestExecute, selectedNode }) {
+function Toolbar({ onSave, onLoad, onAnalyze, onDelete, onTestExecute, onEdit, selectedNode }) {
   return (
     <div className="toolbar">
       <div className="toolbar-left">
@@ -33,9 +33,14 @@ function Toolbar({ onSave, onLoad, onAnalyze, onDelete, onTestExecute, selectedN
         </label>
 
         {selectedNode && (
-          <button className="btn btn-danger" onClick={onDelete}>
-            🗑️ Delete
-          </button>
+          <>
+            <button className="btn btn-secondary" onClick={onEdit}>
+              ✏️ Edit
+            </button>
+            <button className="btn btn-danger" onClick={onDelete}>
+              🗑️ Delete
+            </button>
+          </>
         )}
       </div>
     </div>
