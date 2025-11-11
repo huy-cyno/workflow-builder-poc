@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -144,6 +144,82 @@ function WorkflowBuilder() {
   const [selectedNode, setSelectedNode] = useState(null);
   const [showExecutionDemo, setShowExecutionDemo] = useState(false);
   const [showNodeEditor, setShowNodeEditor] = useState(false);
+
+  // PostMessage integration for Angular wrapper
+  useEffect(() => {
+    // Notify Angular that React app is ready
+    const notifyReady = () => {
+      if (window.parent !== window) {
+        window.parent.postMessage({ type: 'REACT_APP_READY' }, '*');
+        console.log('📤 Sent REACT_APP_READY to Angular');
+      }
+    };
+
+    // Send ready message after a short delay to ensure parent is listening
+    const timer = setTimeout(notifyReady, 100);
+
+    // Listen for messages from Angular
+    const handleMessage = (event) => {
+      console.log('📨 Message received in React:', event.data);
+
+      switch (event.data.type) {
+        case 'LOAD_WORKFLOW':
+          if (event.data.workflow) {
+            setNodes(event.data.workflow.nodes || []);
+            setEdges(event.data.workflow.edges || []);
+            window.parent.postMessage({
+              type: 'WORKFLOW_LOADED',
+              workflow: event.data.workflow
+            }, '*');
+            console.log('✅ Workflow loaded from Angular');
+          }
+          break;
+
+        case 'SAVE_WORKFLOW':
+          const workflow = {
+            nodes,
+            edges,
+            metadata: {
+              version: 1,
+              createdAt: new Date().toISOString(),
+            }
+          };
+          window.parent.postMessage({
+            type: 'WORKFLOW_SAVED',
+            workflow: workflow
+          }, '*');
+          console.log('💾 Workflow saved and sent to Angular');
+          break;
+
+        case 'CLEAR_WORKFLOW':
+          setNodes([]);
+          setEdges([]);
+          setSelectedNode(null);
+          console.log('🗑️ Workflow cleared');
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [nodes, edges, setNodes, setEdges]);
+
+  // Notify Angular when a node is selected
+  useEffect(() => {
+    if (selectedNode && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'NODE_SELECTED',
+        node: selectedNode
+      }, '*');
+    }
+  }, [selectedNode]);
 
   // Handle connection between nodes
   const onConnect = useCallback(

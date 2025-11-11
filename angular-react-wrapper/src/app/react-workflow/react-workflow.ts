@@ -15,8 +15,10 @@ export class ReactWorkflow implements OnInit, OnDestroy {
   private messageListener: any;
 
   constructor(private sanitizer: DomSanitizer) {
-    // Point to the React app in public assets
-    this.reactAppUrl = this.sanitizer.bypassSecurityTrustResourceUrl('/react-app/index.html');
+    // Construct full URL to avoid HMR issues with relative paths
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+    const reactPath = `${baseUrl}/react-app/index.html`;
+    this.reactAppUrl = this.sanitizer.bypassSecurityTrustResourceUrl(reactPath);
   }
 
   ngOnInit(): void {
