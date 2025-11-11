@@ -1,0 +1,15 @@
+<div class="custom-node action-node" [class.selected]="selected">
+  <div class="node-header">
+    <span class="node-icon">⚡</span>
+    <span class="node-title">{{ data.label }}</span>
+  </div>
+
+  <div class="node-content">
+    <div *ngFor="let action of data.actions" class="action-item">
+      <strong>{{ action.title }}</strong>
+      <small>{{ action.type }}</small>
+      <div class="action-value">{{ action.value }}</div>
+    </div>
+  </div>
+</div>
+

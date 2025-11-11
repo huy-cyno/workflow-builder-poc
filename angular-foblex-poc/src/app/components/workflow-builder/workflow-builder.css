@@ -1,0 +1,308 @@
+.workflow-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background: #fafafa;
+}
+
+.workflow-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  gap: 0;
+}
+
+/* Foblex Flow canvas container */
+.flow-container {
+  flex: 1;
+  background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Required for Foblex Flow to render */
+f-flow {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+f-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Node wrapper styles for Foblex Flow */
+.workflow-node-wrapper {
+  position: relative;
+  cursor: grab;
+  display: block;
+  padding: 15px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.workflow-node-wrapper:hover {
+  cursor: grab;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.workflow-node-wrapper:active {
+  cursor: grabbing;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.workflow-node-wrapper.selected {
+  z-index: 10;
+  box-shadow: 0 0 0 3px rgba(109, 157, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Level Node */
+.workflow-node-wrapper.level-node {
+  border: 2px solid #6d9dff;
+}
+
+.workflow-node-wrapper.level-node.selected {
+  border-color: #5b8bdd;
+  background: #f8faff;
+}
+
+/* Condition Node */
+.workflow-node-wrapper.condition-node {
+  border: 2px solid #ffb648;
+}
+
+.workflow-node-wrapper.condition-node.selected {
+  border-color: #ff9e1b;
+  background: #fffbf5;
+}
+
+/* Action Node */
+.workflow-node-wrapper.action-node {
+  border: 2px solid #68cd86;
+}
+
+.workflow-node-wrapper.action-node.selected {
+  border-color: #22863a;
+  background: #f0fdf4;
+}
+
+/* Node header */
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.node-icon {
+  font-size: 18px;
+}
+
+.node-title {
+  font-weight: 600;
+  color: #2d3748;
+  flex: 1;
+}
+
+.start-badge {
+  background: #6d9dff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Node content */
+.node-content {
+  padding-top: 8px;
+}
+
+.node-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.node-info strong {
+  color: #2d3748;
+  font-size: 14px;
+}
+
+.node-info small {
+  color: #718096;
+  font-size: 12px;
+}
+
+.node-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.step-tag {
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.branch-item {
+  background: #fff8f0;
+  border-left: 3px solid #ffb648;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.branch-item.else-branch {
+  background: #f0f0f0;
+  border-left-color: #999;
+}
+
+.branch-item strong {
+  color: #2d3748;
+  font-size: 13px;
+  display: block;
+}
+
+.branch-item small {
+  color: #718096;
+  font-size: 11px;
+  display: block;
+  margin-top: 3px;
+}
+
+.action-item {
+  background: #f0fdf4;
+  border-left: 3px solid #68cd86;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.action-item strong {
+  color: #2d3748;
+  font-size: 13px;
+  display: block;
+}
+
+.action-item small {
+  color: #718096;
+  font-size: 11px;
+  display: block;
+  margin-top: 3px;
+}
+
+.action-value {
+  color: #22863a;
+  font-size: 11px;
+  margin-top: 4px;
+  padding: 4px;
+  background: white;
+  border-radius: 3px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Node input/output connectors */
+[fNodeInput],
+[fNodeOutput] {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #6d9dff;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px #cbd5e0;
+  cursor: crosshair;
+  transition: all 0.2s ease;
+  pointer-events: all;
+  z-index: 10;
+}
+
+[fNodeInput]:hover,
+[fNodeOutput]:hover {
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 0 0 2px #cbd5e0, 0 0 8px rgba(109, 157, 255, 0.5);
+}
+
+[fNodeInput] {
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+[fNodeOutput] {
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Connection line styles - Foblex Flow */
+f-connection {
+  --f-connection-stroke: #6d9dff;
+  --f-connection-stroke-width: 2px;
+  --f-connection-hover-stroke: #5b8bdd;
+}
+
+/* Style all SVG elements within connections */
+f-connection svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: visible !important;
+}
+
+/* Connection stroke styling - try multiple selectors */
+f-connection line,
+f-connection path,
+f-connection polyline {
+  stroke: #6d9dff !important;
+  stroke-width: 2px !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  fill: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Connection arrow marker */
+f-connection marker {
+  fill: #6d9dff !important;
+}
+
+/* Connection hover effect */
+f-connection:hover line,
+f-connection:hover path,
+f-connection:hover polyline {
+  stroke: #5b8bdd !important;
+  stroke-width: 2.5px !important;
+}
+
+/* During drag - preview connection line */
+f-connection.dragging line,
+f-connection.dragging path,
+f-connection.dragging polyline {
+  stroke: #ffb648 !important;
+  stroke-width: 2.5px !important;
+  stroke-dasharray: 5, 5 !important;
+}
+

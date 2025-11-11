@@ -1,0 +1,18 @@
+<div class="custom-node level-node" [class.selected]="selected">
+  <div class="node-header">
+    <span class="node-icon">💾</span>
+    <span class="node-title">{{ data.label }}</span>
+    <span *ngIf="data.isStart" class="start-badge">Start</span>
+  </div>
+
+  <div class="node-content">
+    <div class="node-info">
+      <strong>{{ data.levelName }}</strong>
+      <small>{{ data.levelType }}</small>
+    </div>
+
+    <div class="node-steps">
+      <span *ngFor="let step of data.steps" class="step-tag">{{ step }}</span>
+    </div>
+  </div>
+</div>

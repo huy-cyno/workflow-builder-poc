@@ -1,0 +1,108 @@
+<div class="node-editor-panel">
+  <div class="editor-header">
+    <h2>Edit Node</h2>
+    <button class="close-btn" (click)="closeEditor()">✕</button>
+  </div>
+
+  <div class="editor-content">
+    <!-- Common fields -->
+    <div class="form-group">
+      <label>Node Label</label>
+      <input type="text" [(ngModel)]="editData.label" class="form-input" />
+    </div>
+
+    <!-- Level Node specific fields -->
+    <ng-container *ngIf="node.type === 'level'">
+      <div class="form-group">
+        <label>Level Name</label>
+        <input type="text" [(ngModel)]="editData.levelName" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label>Level Type</label>
+        <select [(ngModel)]="editData.levelType" class="form-input">
+          <option>Individuals</option>
+          <option>Companies</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Is Start Node</label>
+        <input type="checkbox" [(ngModel)]="editData.isStart" class="form-checkbox" />
+      </div>
+
+      <div class="form-group">
+        <label>Steps</label>
+        <div class="steps-list">
+          <div *ngFor="let step of editData.steps; let i = index" class="step-item">
+            <input type="text" [(ngModel)]="editData.steps[i]" class="form-input" />
+            <button class="remove-btn" (click)="removeStep(i)">Remove</button>
+          </div>
+        </div>
+        <button class="add-btn" (click)="addStep()">Add Step</button>
+      </div>
+    </ng-container>
+
+    <!-- Condition Node specific fields -->
+    <ng-container *ngIf="node.type === 'condition'">
+      <div class="form-group">
+        <label>Branches</label>
+        <div class="branches-list">
+          <div *ngFor="let branch of editData.branches; let i = index" class="branch-card">
+            <div class="form-group">
+              <label>Branch Name</label>
+              <input type="text" [(ngModel)]="editData.branches[i].name" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Condition</label>
+              <input type="text" [(ngModel)]="editData.branches[i].condition" class="form-input" />
+            </div>
+
+            <button class="remove-btn" (click)="removeBranch(i)">Remove Branch</button>
+          </div>
+        </div>
+        <button class="add-btn" (click)="addBranch()">Add Branch</button>
+      </div>
+    </ng-container>
+
+    <!-- Action Node specific fields -->
+    <ng-container *ngIf="node.type === 'action'">
+      <div class="form-group">
+        <label>Actions</label>
+        <div class="actions-list">
+          <div *ngFor="let action of editData.actions; let i = index" class="action-card">
+            <div class="form-group">
+              <label>Action Title</label>
+              <input type="text" [(ngModel)]="editData.actions[i].title" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Action Type</label>
+              <select [(ngModel)]="editData.actions[i].type" class="form-input">
+                <option>createCase</option>
+                <option>webhook</option>
+                <option>sendEmail</option>
+                <option>createACase</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Action Value</label>
+              <textarea [(ngModel)]="editData.actions[i].value" class="form-textarea"></textarea>
+            </div>
+
+            <button class="remove-btn" (click)="removeAction(i)">Remove Action</button>
+          </div>
+        </div>
+        <button class="add-btn" (click)="addAction()">Add Action</button>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="editor-footer">
+    <button class="btn-save" (click)="saveChanges()">Save</button>
+    <button class="btn-cancel" (click)="closeEditor()">Cancel</button>
+  </div>
+</div>
+

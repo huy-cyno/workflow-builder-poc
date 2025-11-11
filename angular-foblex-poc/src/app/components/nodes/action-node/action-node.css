@@ -1,0 +1,81 @@
+.custom-node {
+  padding: 15px;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid #68cd86;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-node.selected {
+  border-color: #68cd86;
+  box-shadow: 0 0 0 3px rgba(104, 205, 134, 0.1), 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.action-node {
+  border-color: #68cd86;
+}
+
+.action-node.selected {
+  border-color: #22863a;
+  background: #f0fdf4;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.node-icon {
+  font-size: 18px;
+}
+
+.node-title {
+  font-weight: 600;
+  color: #2d3748;
+  flex: 1;
+}
+
+.node-content {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.action-item {
+  background: #f0fdf4;
+  border-left: 3px solid #68cd86;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.action-item strong {
+  color: #2d3748;
+  font-size: 13px;
+  display: block;
+}
+
+.action-item small {
+  color: #718096;
+  font-size: 11px;
+  display: block;
+  margin-top: 3px;
+}
+
+.action-value {
+  color: #22863a;
+  font-size: 11px;
+  margin-top: 4px;
+  padding: 4px;
+  background: white;
+  border-radius: 3px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

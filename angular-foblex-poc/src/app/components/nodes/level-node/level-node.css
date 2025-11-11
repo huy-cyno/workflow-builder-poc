@@ -1,0 +1,86 @@
+.custom-node {
+  padding: 15px;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid #6d9dff;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-node.selected {
+  border-color: #6d9dff;
+  box-shadow: 0 0 0 3px rgba(109, 157, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.level-node {
+  border-color: #6d9dff;
+}
+
+.level-node.selected {
+  border-color: #5b8bdd;
+  background: #f8faff;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.node-icon {
+  font-size: 18px;
+}
+
+.node-title {
+  font-weight: 600;
+  color: #2d3748;
+  flex: 1;
+}
+
+.start-badge {
+  background: #6d9dff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.node-content {
+  padding-top: 8px;
+}
+
+.node-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.node-info strong {
+  color: #2d3748;
+  font-size: 14px;
+}
+
+.node-info small {
+  color: #718096;
+  font-size: 12px;
+}
+
+.node-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.step-tag {
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}

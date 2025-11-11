@@ -1,0 +1,32 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h3>Components</h3>
+  </div>
+
+  <div class="sidebar-content">
+    <div *ngFor="let template of nodeTemplates" class="node-template" (click)="onNodeClick(template)">
+      <div class="template-icon">{{ template.icon }}</div>
+      <div class="template-info">
+        <div class="template-title">{{ template.title }}</div>
+        <div class="template-description">{{ template.description }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Templates Section -->
+  <div class="sidebar-divider" *ngIf="availableTemplates.length > 0"></div>
+  <div class="sidebar-header" *ngIf="availableTemplates.length > 0">
+    <h3>Templates</h3>
+  </div>
+
+  <div class="sidebar-content" *ngIf="availableTemplates.length > 0">
+    <div *ngFor="let template of availableTemplates" class="workflow-template" (click)="onLoadTemplateClick(template.id)">
+      <div class="template-icon">📋</div>
+      <div class="template-info">
+        <div class="template-title">{{ template.name }}</div>
+        <div class="template-description">{{ template.description }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+<div class="toolbar">
+  <div class="toolbar-title">Workflow Builder</div>
+
+  <div class="toolbar-actions">
+    <button
+      *ngFor="let action of actions"
+      class="toolbar-button"
+      [class.disabled]="isActionDisabled(action.id)"
+      [disabled]="isActionDisabled(action.id)"
+      [title]="action.tooltip"
+      (click)="handleAction(action.id)"
+    >
+      <span class="button-icon">{{ action.icon }}</span>
+      <span class="button-label">{{ action.label }}</span>
+    </button>
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+<div class="custom-node condition-node" [class.selected]="selected">
+  <div class="node-header">
+    <span class="node-icon">🔀</span>
+    <span class="node-title">{{ data.label }}</span>
+  </div>
+
+  <div class="node-content">
+    <div *ngFor="let branch of data.branches" class="branch-item">
+      <strong>{{ branch.name }}</strong>
+      <small>{{ branch.condition }}</small>
+    </div>
+    <div class="branch-item else-branch">
+      <strong>Else</strong>
+      <small>Default branch</small>
+    </div>
+  </div>
+</div>
+

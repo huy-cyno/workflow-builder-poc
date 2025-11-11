@@ -1,0 +1,99 @@
+<div class="workflow-container">
+  <app-toolbar
+    (onAddNode)="onAddNode($event)"
+    (onDeleteNode)="onDeleteNode($event)"
+    (onAnalyze)="onAnalyzeWorkflow()"
+    (onExecute)="onExecuteWorkflow()"
+    (onSave)="onSaveWorkflow()"
+    (onLoad)="onLoadWorkflow()"
+    [selectedNodeId]="selectedNode?.id"
+  ></app-toolbar>
+
+  <div class="workflow-content">
+    <app-sidebar
+      (onNodeSelected)="onAddNode($event)"
+      (onTemplateSelected)="onLoadTemplate($event)"
+      [availableTemplates]="getAvailableTemplates()">
+    </app-sidebar>
+
+    <f-flow class="flow-container" fDraggable (fCreateConnection)="onCreateConnection($event)" (fMoveNodes)="onMoveNodes($event)">
+      <f-canvas>
+        <!-- Render all nodes -->
+        <div *ngFor="let node of nodes"
+          fNode
+          [fNodeId]="node.id"
+          [fNodePosition]="node.position"
+          fDragHandle
+          class="workflow-node-wrapper"
+          [ngClass]="node.type + '-node'"
+          [class.selected]="selectedNode?.id === node.id"
+          (dblclick)="onNodeClick(node.id)"
+          (contextmenu)="onNodeClick(node.id); $event.preventDefault()"
+        >
+          <!-- Node Header -->
+          <div class="node-header">
+            <span class="node-icon">
+              {{ node.type === 'level' ? '💾' : node.type === 'condition' ? '🔀' : '⚡' }}
+            </span>
+            <span class="node-title">{{ node.data.label }}</span>
+            <span *ngIf="node.data.isStart" class="start-badge">Start</span>
+          </div>
+
+          <!-- Node Content -->
+          <div class="node-content" *ngIf="node.type === 'level'">
+            <strong>{{ node.data.levelName }}</strong>
+            <small>{{ node.data.levelType }}</small>
+            <div class="node-steps">
+              <span *ngFor="let step of node.data.steps" class="step-tag">{{ step }}</span>
+            </div>
+          </div>
+
+          <div class="node-content" *ngIf="node.type === 'condition'">
+            <div *ngFor="let branch of node.data.branches" class="branch-item">
+              <strong>{{ branch.name }}</strong>
+              <small>{{ branch.condition }}</small>
+            </div>
+            <div class="branch-item else-branch">
+              <strong>Else</strong>
+              <small>Default</small>
+            </div>
+          </div>
+
+          <div class="node-content" *ngIf="node.type === 'action'">
+            <div *ngFor="let action of node.data.actions" class="action-item">
+              <strong>{{ action.title }}</strong>
+              <small>{{ action.type }}</small>
+            </div>
+          </div>
+
+          <!-- Connectors -->
+          <div fNodeInput [fInputId]="node.id + '-input'" fInputConnectableSide="left"></div>
+          <div fNodeOutput [fOutputId]="node.id + '-output'" fOutputConnectableSide="right"></div>
+        </div>
+
+        <!-- Render all connections -->
+        <f-connection
+          *ngFor="let edge of edges"
+          [fConnectionId]="edge.id"
+          [fOutputId]="edge.sourceHandle || (edge.source + '-output')"
+          [fInputId]="edge.targetHandle || (edge.target + '-input')"
+        ></f-connection>
+      </f-canvas>
+    </f-flow>
+
+    <app-node-editor
+      *ngIf="selectedNode"
+      [node]="selectedNode"
+      (onUpdate)="onAddNode($event)"
+      (onClose)="selectedNode = null"
+    ></app-node-editor>
+
+    <app-execution-panel
+      [nodes]="nodes"
+      [edges]="edges"
+      [isVisible]="isExecutionPanelVisible"
+      (onClose)="onCloseExecutionPanel()"
+    ></app-execution-panel>
+  </div>
+</div>
+

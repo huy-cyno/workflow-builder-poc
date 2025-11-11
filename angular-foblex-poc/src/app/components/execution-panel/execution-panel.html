@@ -1,0 +1,115 @@
+<div class="execution-panel" *ngIf="isVisible">
+  <div class="execution-header">
+    <h2>Test Execute</h2>
+    <button class="close-btn" (click)="onClose.emit()" aria-label="Close execution panel">✕</button>
+  </div>
+
+  <div class="execution-content">
+    <!-- No execution yet -->
+    <div *ngIf="!executionTrace" class="execution-empty">
+      <div class="empty-state">
+        <div class="empty-icon">⚡</div>
+        <p>No execution history</p>
+        <p class="empty-hint">Click "Execute" to start workflow simulation</p>
+      </div>
+    </div>
+
+    <!-- Execution in progress or completed -->
+    <div *ngIf="executionTrace" class="execution-active">
+      <!-- Execution controls -->
+      <div class="execution-controls">
+        <button
+          class="btn btn-primary"
+          (click)="startExecution()"
+          [disabled]="executing || !hasNodes"
+          aria-label="Start workflow execution">
+          {{ executing ? '⏳ Executing...' : '▶️ Execute' }}
+        </button>
+        <button
+          class="btn btn-secondary"
+          (click)="clearExecution()"
+          aria-label="Clear execution history">
+          🗑️ Clear
+        </button>
+      </div>
+
+      <!-- Execution status -->
+      <div class="execution-status">
+        <div class="status-item">
+          <span class="label">Status:</span>
+          <span class="value" [ngClass]="executionTrace.completed ? 'completed' : 'running'">
+            {{ executionTrace.completed ? '✅ Completed' : '⏳ In Progress' }}
+          </span>
+        </div>
+        <div *ngIf="stats" class="status-item">
+          <span class="label">Duration:</span>
+          <span class="value">{{ formatDuration(stats.duration) }}</span>
+        </div>
+        <div *ngIf="stats" class="status-item">
+          <span class="label">Steps:</span>
+          <span class="value">{{ stats.completedSteps }}/{{ stats.totalSteps }}</span>
+        </div>
+      </div>
+
+      <!-- Error display -->
+      <div *ngIf="executionTrace.error" class="execution-error">
+        <span class="error-icon">❌</span>
+        <span class="error-message">{{ executionTrace.error }}</span>
+      </div>
+
+      <!-- Execution path -->
+      <div *ngIf="stats" class="execution-path">
+        <h3>Execution Path</h3>
+        <div class="path-display">
+          {{ executionPath }}
+        </div>
+      </div>
+
+      <!-- Execution steps -->
+      <div class="execution-steps">
+        <h3>Execution Trace</h3>
+        <div *ngIf="executionTrace.steps.length === 0" class="no-steps">
+          No steps executed
+        </div>
+        <div *ngFor="let step of executionTrace.steps; let i = index" class="step-item" [ngClass]="'status-' + step.status">
+          <div class="step-header">
+            <span class="step-number">{{ i + 1 }}</span>
+            <span class="step-icon">{{ getStatusIcon(step.status) }}</span>
+            <span class="step-name">{{ step.nodeName }}</span>
+            <span class="step-type">({{ step.nodeType }})</span>
+            <span class="step-status">{{ step.status }}</span>
+          </div>
+          <div class="step-details">
+            <div class="detail-row">
+              <span class="detail-label">Timestamp:</span>
+              <span class="detail-value">{{ (step.timestamp | date:'HH:mm:ss.SSS') }}</span>
+            </div>
+            <div *ngIf="step.output" class="detail-row">
+              <span class="detail-label">Output:</span>
+              <span class="detail-value output-data">{{ step.output | json }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics summary -->
+      <div *ngIf="stats" class="execution-summary">
+        <h3>Statistics</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">{{ stats.totalSteps }}</div>
+            <div class="stat-label">Total Steps</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">{{ stats.completedSteps }}</div>
+            <div class="stat-label">Completed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">{{ formatDuration(stats.duration) }}</div>
+            <div class="stat-label">Duration</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
