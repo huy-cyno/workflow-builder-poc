@@ -1,6 +1,7 @@
 {
   "name": "workflow-builder-poc",
   "version": "0.2.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "react": "^18.2.0",

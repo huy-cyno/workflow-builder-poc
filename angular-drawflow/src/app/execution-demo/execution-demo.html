@@ -1,0 +1,122 @@
+<div class="execution-demo-overlay">
+  <div class="execution-demo">
+    <div class="demo-header">
+      <h2>🚀 Workflow Execution Demo</h2>
+      <button class="close-btn" (click)="onClose()">✕</button>
+    </div>
+
+    <div class="demo-content">
+      <div class="demo-section">
+        <h3>📖 How It Works</h3>
+        <div class="info-box">
+          <p>This demo shows how to <strong>consume the workflow JSON</strong> from the builder:</p>
+          <ol>
+            <li>The workflow is passed as Drawflow data structure</li>
+            <li><code>WorkflowExecutor</code> parses the structure</li>
+            <li>It executes nodes in order, following connections</li>
+            <li>For <strong>condition nodes</strong>, it evaluates branches and takes the matching path</li>
+            <li>Returns execution log showing the path taken</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="demo-section">
+        <h3>📝 Test Data (Input Context)</h3>
+        <p class="hint">
+          Edit the JSON below to test different scenarios.
+          Condition nodes will evaluate against these values.
+        </p>
+        <textarea
+          class="test-data-input"
+          [(ngModel)]="testData"
+          placeholder='{"age": 25, "country": "Singapore"}'
+        ></textarea>
+      </div>
+
+      <div class="demo-section">
+        <h3>🔍 Workflow Structure</h3>
+        <div class="workflow-info">
+          <div class="info-item">
+            <strong>Nodes:</strong> {{ nodeCount }}
+          </div>
+          <div class="info-item">
+            <strong>Start Node:</strong> {{ startNodeLabel }}
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="execute-btn"
+        (click)="handleExecute()"
+        [disabled]="isExecuting"
+      >
+        {{ isExecuting ? '⏳ Executing...' : '▶️ Execute Workflow' }}
+      </button>
+
+      <div class="error-box" *ngIf="error">
+        <strong>Error:</strong> {{ error }}
+      </div>
+
+      <div class="execution-log" *ngIf="executionResult">
+        <h3>Execution Log</h3>
+
+        <div class="log-summary">
+          <div class="summary-item">
+            <strong>Total Steps:</strong> {{ executionResult.steps }}
+          </div>
+          <div class="summary-item">
+            <strong>Status:</strong> {{ executionResult.success ? '✅ Success' : '❌ Failed' }}
+          </div>
+        </div>
+
+        <div class="execution-path">
+          <strong>Path Taken:</strong>
+          <div class="path-flow">
+            <ng-container *ngFor="let step of executionResult.summary.executionPath; let idx = index">
+              <span class="path-step">{{ step }}</span>
+              <span class="path-arrow" *ngIf="idx < executionResult.summary.executionPath.length - 1">→</span>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="log-details">
+          <strong>Step-by-Step Details:</strong>
+          <div *ngFor="let entry of executionResult.executionLog" class="log-entry" [ngClass]="entry.nodeType">
+            <div class="log-header">
+              <span class="step-number">Step {{ entry.step }}</span>
+              <span class="node-type">{{ entry.nodeType }}</span>
+            </div>
+            <div class="log-label">{{ entry.label }}</div>
+            <div class="log-result" *ngIf="entry.result">
+              <pre>{{ entry.result | json }}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-footer">
+      <div class="code-example">
+        <h4>💻 How to Use in Your Code:</h4>
+        <pre>// 1. Import the executor
+import &#123; WorkflowExecutor &#125; from './utils/workflow-executor';
+
+// 2. Get workflow from Drawflow
+const workflowData = this.editor.export();
+
+// 3. Create executor
+const executor = new WorkflowExecutor(workflowData);
+
+// 4. Execute with user data
+const result = await executor.execute(&#123;
+  age: 25,
+  country: 'Singapore'
+&#125;);
+
+// 5. Use the results
+console.log('Path taken:', result.summary.executionPath);
+console.log('Steps:', result.executionLog);</pre>
+      </div>
+    </div>
+  </div>
+</div>

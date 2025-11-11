@@ -32,6 +32,10 @@
         🗑️ Clear All
       </button>
 
+      <button class="btn btn-primary" (click)="testExecute()" title="Test Execute">
+        ▶️ Test Execute
+      </button>
+
       <button class="btn btn-danger" (click)="deleteNode()" *ngIf="selectedNode" title="Delete Node">
         ✕ Delete
       </button>
@@ -86,4 +90,11 @@
       <div #drawflowContainer id="drawflow" class="drawflow-canvas"></div>
     </div>
   </div>
+
+  <!-- Execution Demo Modal -->
+  <app-execution-demo
+    *ngIf="showExecutionDemo && workflowData"
+    [workflowData]="workflowData"
+    (close)="closeExecutionDemo()"
+  ></app-execution-demo>
 </div>

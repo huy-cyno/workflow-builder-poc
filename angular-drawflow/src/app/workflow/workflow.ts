@@ -1,10 +1,12 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Drawflow from 'drawflow';
+import { ExecutionDemo } from '../execution-demo/execution-demo';
+import { DrawflowData } from '../utils/workflow-executor';
 
 @Component({
   selector: 'app-workflow',
-  imports: [CommonModule],
+  imports: [CommonModule, ExecutionDemo],
   templateUrl: './workflow.html',
   styleUrls: ['./workflow.css'],
   standalone: true
@@ -14,6 +16,8 @@ export class Workflow implements OnInit, AfterViewInit {
 
   editor!: Drawflow;
   selectedNode: any = null;
+  showExecutionDemo: boolean = false;
+  workflowData: DrawflowData | null = null;
 
   ngOnInit(): void {
     // Component initialization
@@ -251,5 +255,14 @@ export class Workflow implements OnInit, AfterViewInit {
 
   zoomReset(): void {
     this.editor.zoom_reset();
+  }
+
+  testExecute(): void {
+    this.workflowData = this.editor.export();
+    this.showExecutionDemo = true;
+  }
+
+  closeExecutionDemo(): void {
+    this.showExecutionDemo = false;
   }
 }
