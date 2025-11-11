@@ -2,6 +2,60 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2025-01-11
+
+### Added - Angular Implementations
+- ✅ **Angular + Drawflow Implementation** - Native Angular workflow builder
+  - Standalone Angular 20 components
+  - Drawflow library integration
+  - Custom node types (Level, Condition, Action)
+  - Save/Load workflows as JSON
+  - Zoom controls
+  - **Test Execute feature** with WorkflowExecutor
+
+- ✅ **Angular React Wrapper** - Hybrid Angular + React approach
+  - Embeds React Flow app in Angular via iframe
+  - PostMessage communication bridge (Angular ↔ React)
+  - Load workflows from Angular into React
+  - Trigger save/clear from Angular
+  - Full React Flow features available
+
+- ✅ **Test Execute Feature for Angular Drawflow**
+  - WorkflowExecutor class (TypeScript)
+  - Condition evaluation (equals, >=, <=, >, <, ==, !=)
+  - ExecutionDemo modal component
+  - Test data input with JSON
+  - Execution path visualization
+  - Step-by-step log display
+  - Matches React version functionality
+
+### Fixed
+- ✅ **React Wrapper Iframe Loading** - Fixed React app not rendering in Angular wrapper
+  - Added `"homepage": "."` to package.json for relative paths
+  - Rebuilt React app with relative asset paths (`./static/js/...`)
+  - Fixed absolute path issue (`/static/js/...` → `./static/js/...`)
+
+- ✅ **HMR Issues** - Resolved Hot Module Replacement errors
+  - Added `--hmr=false` flag to npm start scripts
+  - Prevents "Failed to construct 'URL'" errors
+  - Stable development experience (requires full page reloads)
+
+- ✅ **Browser Compatibility** - Added .browserslistrc files
+  - Targets modern browsers (last 2 versions)
+  - Removes `import.meta` warnings
+  - Better ES module support
+
+### Documentation
+- ✅ Updated ANGULAR_IMPLEMENTATIONS.md with Test Execute feature
+- ✅ Updated comparison matrix showing all features
+- ✅ Added detailed implementation notes
+
+### Technical
+- ✅ Disabled HMR in both Angular projects
+- ✅ Added browserslist configuration for modern browsers
+- ✅ Relative paths for React build in wrapper
+- ✅ TypeScript WorkflowExecutor for Drawflow structure
+
 ## [0.2.0] - 2025-01-11
 
 ### Added
@@ -95,6 +149,7 @@ All notable changes to this project will be documented in this file.
 
 ## Version History
 
+- **0.3.0** (2025-01-11) - Angular implementations & Test Execute
 - **0.2.0** (2025-01-11) - Node Editor & UI improvements
 - **0.1.0** (2025-01-10) - Initial PoC release
 

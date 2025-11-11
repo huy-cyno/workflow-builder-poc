@@ -47,6 +47,7 @@ npm start
 - Drawflow library (vanilla JS)
 - Custom node types (Level, Condition, Action)
 - Save/Load workflows
+- **Test Execute** - Workflow execution simulator
 - Zoom controls
 - Lightweight and fast
 
@@ -73,7 +74,7 @@ npm start
 **Cons:**
 - ❌ Less sophisticated than React Flow
 - ❌ Manual HTML templates
-- ❌ No built-in node editor
+- ❌ No built-in node editor (but has Test Execute)
 - ❌ Basic zoom/pan
 
 ---
@@ -131,6 +132,7 @@ REACT_APP_READY          // React loaded
 | **Library** | React Flow | Drawflow | React Flow |
 | **Bundle Size** | ~500KB | ~350KB | ~600KB |
 | **Node Editor** | ✅ Full | ❌ None | ✅ Full |
+| **Test Execute** | ✅ Yes | ✅ Yes | ✅ Yes |
 | **Complexity** | Medium | Low | High |
 | **Customization** | High | Medium | High |
 | **Integration** | React only | Angular only | Both |
@@ -249,10 +251,11 @@ See `CLAUDE.md` for detailed instructions on extending the React version.
 
 ## ✅ What's Working
 
-- ✅ React Flow PoC with full features
-- ✅ Angular Drawflow PoC with basic features
-- ✅ Angular React Wrapper with postMessage bridge
+- ✅ React Flow PoC with full features (NodeEditor + Test Execute)
+- ✅ Angular Drawflow PoC with Test Execute feature
+- ✅ Angular React Wrapper with postMessage bridge (fixed iframe loading)
 - ✅ All three can save/load JSON
+- ✅ All three have Test Execute workflow simulator
 - ✅ All have similar UI/UX
 - ✅ All support custom nodes
 

@@ -1,6 +1,16 @@
 # Workflow Builder PoC
 
-A React Flow-based workflow builder that replicates the Sumsub cockpit interface.
+A visual workflow builder with **three implementations**: React Flow, Angular + Drawflow, and Angular wrapping React.
+
+## 🎯 Three Implementations Available
+
+This project provides three different approaches to building a workflow editor:
+
+1. **React + React Flow** (`src/`) - Main implementation with full features
+2. **Angular + Drawflow** (`angular-drawflow/`) - Native Angular implementation
+3. **Angular React Wrapper** (`angular-react-wrapper/`) - Hybrid approach embedding React in Angular
+
+📖 **See [ANGULAR_IMPLEMENTATIONS.md](ANGULAR_IMPLEMENTATIONS.md)** for detailed comparison and guides.
 
 ## Features
 
@@ -17,19 +27,30 @@ A React Flow-based workflow builder that replicates the Sumsub cockpit interface
 - ✅ Double-click nodes to edit properties
 - ✅ Dynamic branch and action management
 
-## Installation
+## Quick Start
 
+### React Flow (Main)
 ```bash
 npm install
-```
-
-## Running the App
-
-```bash
 npm start
+# Opens at http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Angular Drawflow
+```bash
+cd angular-drawflow
+npm install
+npm start
+# Opens at http://localhost:4200
+```
+
+### Angular React Wrapper
+```bash
+cd angular-react-wrapper
+npm install
+npm start
+# Opens at http://localhost:4200
+```
 
 ## How to Use
 
