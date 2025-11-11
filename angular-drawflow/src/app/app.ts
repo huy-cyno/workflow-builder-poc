@@ -5,7 +5,7 @@ import { Workflow } from './workflow/workflow';
   selector: 'app-root',
   imports: [Workflow],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrls: ['./app.css'],
   standalone: true
 })
 export class App {

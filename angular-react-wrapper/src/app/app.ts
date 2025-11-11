@@ -5,7 +5,7 @@ import { ReactWorkflow } from './react-workflow/react-workflow';
   selector: 'app-root',
   imports: [ReactWorkflow],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrls: ['./app.css'],
   standalone: true
 })
 export class App {

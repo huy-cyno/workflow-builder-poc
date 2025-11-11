@@ -6,7 +6,7 @@ import Drawflow from 'drawflow';
   selector: 'app-workflow',
   imports: [CommonModule],
   templateUrl: './workflow.html',
-  styleUrl: './workflow.css',
+  styleUrls: ['./workflow.css'],
   standalone: true
 })
 export class Workflow implements OnInit, AfterViewInit {

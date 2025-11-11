@@ -5,7 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   selector: 'app-react-workflow',
   imports: [],
   templateUrl: './react-workflow.html',
-  styleUrl: './react-workflow.css',
+  styleUrls: ['./react-workflow.css'],
   standalone: true
 })
 export class ReactWorkflow implements OnInit, OnDestroy {
