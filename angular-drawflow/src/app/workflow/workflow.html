@@ -1,0 +1,89 @@
+<div class="workflow-container">
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <h1>Workflow Builder</h1>
+      <span class="badge">Drawflow</span>
+    </div>
+
+    <div class="toolbar-right">
+      <button class="btn btn-secondary" (click)="zoomIn()" title="Zoom In">
+        🔍+
+      </button>
+
+      <button class="btn btn-secondary" (click)="zoomOut()" title="Zoom Out">
+        🔍-
+      </button>
+
+      <button class="btn btn-secondary" (click)="zoomReset()" title="Reset Zoom">
+        ↺
+      </button>
+
+      <button class="btn btn-secondary" (click)="exportWorkflow()" title="Export">
+        💾 Save
+      </button>
+
+      <label class="btn btn-secondary" title="Import">
+        📂 Load
+        <input type="file" accept=".json" (change)="importWorkflow($event)" style="display: none">
+      </label>
+
+      <button class="btn btn-secondary" (click)="clearWorkflow()" title="Clear">
+        🗑️ Clear All
+      </button>
+
+      <button class="btn btn-danger" (click)="deleteNode()" *ngIf="selectedNode" title="Delete Node">
+        ✕ Delete
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="workflow-content">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3>Add Nodes</h3>
+      </div>
+
+      <div class="sidebar-content">
+        <div class="sidebar-section">
+          <div class="section-header">Node Types</div>
+
+          <div class="node-template" (click)="addLevelNode()" title="Add Level Node">
+            <div class="template-icon">💾</div>
+            <div class="template-info">
+              <div class="template-title">Level Step</div>
+              <div class="template-description">Verification level</div>
+            </div>
+          </div>
+
+          <div class="node-template" (click)="addConditionNode()" title="Add Condition Node">
+            <div class="template-icon">🔀</div>
+            <div class="template-info">
+              <div class="template-title">Condition</div>
+              <div class="template-description">Branch logic</div>
+            </div>
+          </div>
+
+          <div class="node-template" (click)="addActionNode()" title="Add Action Node">
+            <div class="template-icon">⚡</div>
+            <div class="template-info">
+              <div class="template-title">Action</div>
+              <div class="template-description">Execute actions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <p>Click to add nodes to canvas</p>
+      </div>
+    </div>
+
+    <!-- Drawflow Canvas -->
+    <div class="drawflow-wrapper">
+      <div #drawflowContainer id="drawflow" class="drawflow-canvas"></div>
+    </div>
+  </div>
+</div>
