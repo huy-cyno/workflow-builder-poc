@@ -32,6 +32,12 @@ export class WorkflowBuilder implements OnInit, OnDestroy {
   selectedNode: WorkflowNode | null = null;
   isExecutionPanelVisible = false;
 
+  // Custom drag-to-connect state
+  private isDraggingConnector = false;
+  private dragStartType: 'input' | 'output' | null = null;
+  private dragStartNodeId: string | null = null;
+  private dragStartElement: HTMLElement | null = null;
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -40,11 +46,14 @@ export class WorkflowBuilder implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log('WorkflowBuilder initialized');
+
     // Subscribe to workflow nodes
     this.workflowService.nodes$
       .pipe(takeUntil(this.destroy$))
       .subscribe(workflowNodes => {
         this.nodes = workflowNodes;
+        console.log('Nodes updated:', workflowNodes.map(n => ({ id: n.id, type: n.type })));
       });
 
     // Subscribe to workflow edges
@@ -52,8 +61,7 @@ export class WorkflowBuilder implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(workflowEdges => {
         this.edges = workflowEdges;
-        console.log('Edges updated:', workflowEdges);
-        console.log('Current nodes:', this.nodes);
+        console.log('Edges updated:', workflowEdges.length, 'edges');
       });
 
     // Subscribe to selected node
@@ -62,6 +70,9 @@ export class WorkflowBuilder implements OnInit, OnDestroy {
       .subscribe(node => {
         this.selectedNode = node;
       });
+
+    // Add global mouse listeners for custom drag-to-connect
+    document.addEventListener('mouseup', (e) => this.onConnectorMouseUp(e));
   }
 
   ngOnDestroy(): void {
@@ -76,24 +87,141 @@ export class WorkflowBuilder implements OnInit, OnDestroy {
     }
   }
 
+  onConnectorMouseDown(type: 'input' | 'output', nodeId: string): void {
+    console.log(`🔌 START DRAG: ${type} connector on node ${nodeId}`);
+    this.isDraggingConnector = true;
+    this.dragStartType = type;
+    this.dragStartNodeId = nodeId;
+  }
+
+  onConnectorMouseUp(event: MouseEvent): void {
+    if (!this.isDraggingConnector || !this.dragStartType || !this.dragStartNodeId) {
+      return;
+    }
+
+    console.log(`🔌 DRAG ENDED`);
+    this.isDraggingConnector = false;
+
+    // Get the element under the mouse cursor
+    const targetElement = document.elementFromPoint(event.clientX, event.clientY) as HTMLElement;
+
+    if (!targetElement) {
+      console.log('No target element found');
+      return;
+    }
+
+    // Check if we released over a connector
+    const isInputConnector = targetElement.hasAttribute('fNodeInput');
+    const isOutputConnector = targetElement.hasAttribute('fNodeOutput');
+
+    if (!isInputConnector && !isOutputConnector) {
+      console.log('Not released over a connector');
+      this.dragStartType = null;
+      this.dragStartNodeId = null;
+      return;
+    }
+
+    // Get the target node ID from parent
+    const connectorParent = targetElement.closest('.workflow-node-wrapper') as HTMLElement;
+    if (!connectorParent) {
+      console.log('Could not find connector parent node');
+      this.dragStartType = null;
+      this.dragStartNodeId = null;
+      return;
+    }
+
+    // Get the node ID from data attribute
+    const targetNodeId = connectorParent.getAttribute('data-node-id');
+
+    if (!targetNodeId) {
+      console.log('Could not find target node ID');
+      this.dragStartType = null;
+      this.dragStartNodeId = null;
+      return;
+    }
+
+    console.log(`🔌 Target node ID: ${targetNodeId}, Target is: ${isInputConnector ? 'input' : 'output'}`);
+
+    // Validate the connection
+    const startIsOutput = this.dragStartType === 'output';
+    const endIsInput = isInputConnector;
+
+    if (!startIsOutput || !endIsInput) {
+      console.log('Invalid connection: must drag from output to input');
+      this.dragStartType = null;
+      this.dragStartNodeId = null;
+      return;
+    }
+
+    if (this.dragStartNodeId === targetNodeId) {
+      console.log('Cannot connect a node to itself');
+      this.dragStartType = null;
+      this.dragStartNodeId = null;
+      return;
+    }
+
+    // Create the connection
+    this.createConnectionBetweenNodes(this.dragStartNodeId, targetNodeId);
+
+    this.dragStartType = null;
+    this.dragStartNodeId = null;
+  }
+
+  private createConnectionBetweenNodes(sourceNodeId: string, targetNodeId: string): void {
+    const edgeId = `edge-${Date.now()}`;
+    const edge: WorkflowEdge = {
+      id: edgeId,
+      source: sourceNodeId,
+      target: targetNodeId,
+      sourceHandle: sourceNodeId + '-output',
+      targetHandle: targetNodeId + '-input',
+      type: 'smoothstep',
+      style: { stroke: '#6D9DFF', strokeWidth: 2 },
+    };
+
+    console.log('✅ Creating connection:', edge);
+    this.workflowService.addEdge(edge);
+  }
+
   onCreateConnection(event: any): void {
+    console.log('=== Connection Event Fired ===');
+    console.log('Raw event:', event);
+    console.log('Event keys:', Object.keys(event));
+    console.log('fOutputId:', event.fOutputId);
+    console.log('fInputId:', event.fInputId);
+
     const edgeId = `edge-${Date.now()}`;
 
     // Extract node ID from handle ID
     // Handle format: "node-id-output" or "node-id-input"
     // We need to remove the last segment (-output or -input)
     const extractNodeId = (handleId: string): string => {
+      console.log('Extracting from handleId:', handleId);
       const lastDashIndex = handleId.lastIndexOf('-');
-      return handleId.substring(0, lastDashIndex);
+      const extracted = handleId.substring(0, lastDashIndex);
+      console.log('Extracted nodeId:', extracted);
+      return extracted;
     };
 
     const sourceNodeId = extractNodeId(event.fOutputId);
     const targetNodeId = extractNodeId(event.fInputId);
 
+    console.log('Source node ID:', sourceNodeId);
+    console.log('Target node ID:', targetNodeId);
+    console.log('Current nodes:', this.nodes.map(n => n.id));
+
     // Validate nodes exist
-    if (!this.nodes.find(n => n.id === sourceNodeId) ||
-        !this.nodes.find(n => n.id === targetNodeId)) {
-      console.error('Connection failed: Invalid node IDs', { sourceNodeId, targetNodeId });
+    const sourceExists = this.nodes.find(n => n.id === sourceNodeId);
+    const targetExists = this.nodes.find(n => n.id === targetNodeId);
+
+    if (!sourceExists || !targetExists) {
+      console.error('Connection failed: Invalid node IDs', {
+        sourceNodeId,
+        targetNodeId,
+        sourceExists: !!sourceExists,
+        targetExists: !!targetExists,
+        availableNodeIds: this.nodes.map(n => n.id)
+      });
       return;
     }
 
@@ -107,7 +235,7 @@ export class WorkflowBuilder implements OnInit, OnDestroy {
       style: { stroke: '#6D9DFF', strokeWidth: 2 },
     };
 
-    console.log('Creating connection:', edge);
+    console.log('✅ Creating connection:', edge);
     this.workflowService.addEdge(edge);
   }
 

@@ -16,22 +16,23 @@
       [availableTemplates]="getAvailableTemplates()">
     </app-sidebar>
 
-    <f-flow class="flow-container" fDraggable (fCreateConnection)="onCreateConnection($event)" (fMoveNodes)="onMoveNodes($event)">
+    <f-flow class="flow-container" fDraggable (fMoveNodes)="onMoveNodes($event)">
       <f-canvas>
         <!-- Render all nodes -->
         <div *ngFor="let node of nodes"
           fNode
           [fNodeId]="node.id"
           [fNodePosition]="node.position"
-          fDragHandle
           class="workflow-node-wrapper"
           [ngClass]="node.type + '-node'"
           [class.selected]="selectedNode?.id === node.id"
-          (dblclick)="onNodeClick(node.id)"
-          (contextmenu)="onNodeClick(node.id); $event.preventDefault()"
+          [attr.data-node-id]="node.id"
         >
-          <!-- Node Header -->
-          <div class="node-header">
+          <!-- Node Header - Drag Handle Area -->
+          <div class="node-header" fDragHandle
+            (dblclick)="onNodeClick(node.id)"
+            (contextmenu)="onNodeClick(node.id); $event.preventDefault()"
+          >
             <span class="node-icon">
               {{ node.type === 'level' ? '💾' : node.type === 'condition' ? '🔀' : '⚡' }}
             </span>
@@ -67,8 +68,14 @@
           </div>
 
           <!-- Connectors -->
-          <div fNodeInput [fInputId]="node.id + '-input'" fInputConnectableSide="left"></div>
-          <div fNodeOutput [fOutputId]="node.id + '-output'" fOutputConnectableSide="right"></div>
+          <div fNodeInput
+            [fInputId]="node.id + '-input'"
+            fInputConnectableSide="left"
+            (mousedown)="onConnectorMouseDown('input', node.id)"></div>
+          <div fNodeOutput
+            [fOutputId]="node.id + '-output'"
+            fOutputConnectableSide="right"
+            (mousedown)="onConnectorMouseDown('output', node.id)"></div>
         </div>
 
         <!-- Render all connections -->

@@ -41,7 +41,7 @@ f-canvas {
 /* Node wrapper styles for Foblex Flow */
 .workflow-node-wrapper {
   position: relative;
-  cursor: grab;
+  cursor: default;
   display: block;
   padding: 15px;
   border-radius: 8px;
@@ -49,16 +49,14 @@ f-canvas {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 200px;
   user-select: none;
-  transition: all 0.2s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .workflow-node-wrapper:hover {
-  cursor: grab;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .workflow-node-wrapper:active {
-  cursor: grabbing;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -97,22 +95,63 @@ f-canvas {
   background: #f0fdf4;
 }
 
-/* Node header */
+/* Node header - Drag Handle Area */
 .node-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 10px;
+  margin: -15px -15px 10px -15px;
+  padding: 12px 15px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0) 100%);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  cursor: grab;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.2s ease;
+}
+
+.node-header:hover {
+  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
+  cursor: grab;
+}
+
+.node-header:active {
+  cursor: grabbing;
+  background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 100%);
 }
 
 .node-icon {
   font-size: 18px;
+  flex-shrink: 0;
 }
 
 .node-title {
   font-weight: 600;
   color: #2d3748;
   flex: 1;
+  user-select: none;
+  padding: 2px 0;
+}
+
+/* Drag indicator - shows you can drag from header */
+.node-header::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    currentColor,
+    currentColor 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.3;
+  margin-right: 8px;
+  flex-shrink: 0;
+  display: none;
+}
+
+.node-header:hover::before {
+  display: block;
 }
 
 .start-badge {
@@ -126,7 +165,8 @@ f-canvas {
 
 /* Node content */
 .node-content {
-  padding-top: 8px;
+  padding: 0;
+  pointer-events: auto;
 }
 
 .node-info {
@@ -150,6 +190,8 @@ f-canvas {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: 6px;
+  pointer-events: auto;
 }
 
 .step-tag {
@@ -166,7 +208,8 @@ f-canvas {
   border-left: 3px solid #ffb648;
   padding: 8px;
   border-radius: 4px;
-  margin-bottom: 6px;
+  margin: 6px 0;
+  pointer-events: auto;
 }
 
 .branch-item.else-branch {
@@ -192,7 +235,8 @@ f-canvas {
   border-left: 3px solid #68cd86;
   padding: 8px;
   border-radius: 4px;
-  margin-bottom: 6px;
+  margin: 6px 0;
+  pointer-events: auto;
 }
 
 .action-item strong {
