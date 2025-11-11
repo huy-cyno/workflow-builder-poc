@@ -1,0 +1,179 @@
+.wrapper-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background: #f5f5f5;
+}
+
+/* Angular Controls Panel */
+.angular-controls {
+  background: white;
+  border-bottom: 2px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.controls-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e9ecef;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.controls-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.tech-badge {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tech-badge.angular {
+  background: #dd0031;
+  color: white;
+}
+
+.tech-badge.react {
+  background: #61dafb;
+  color: #282c34;
+}
+
+.controls-content {
+  padding: 20px 24px;
+}
+
+.info-text {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.ctrl-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+
+.ctrl-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ctrl-btn:active {
+  transform: translateY(0);
+}
+
+.ctrl-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.ctrl-btn.secondary {
+  background: white;
+  border: 2px solid #dee2e6;
+  color: #495057;
+}
+
+.ctrl-btn.secondary:hover {
+  background: #f8f9fa;
+  border-color: #667eea;
+}
+
+.ctrl-btn.danger {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+  color: white;
+}
+
+.info-box {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1565c0;
+}
+
+.info-box strong {
+  color: #0d47a1;
+}
+
+/* React Frame Container */
+.react-frame-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  margin: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.frame-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #282c34;
+  color: white;
+  border-bottom: 2px solid #61dafb;
+}
+
+.status-indicator {
+  color: #4caf50;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.react-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .button-group {
+    flex-direction: column;
+  }
+
+  .ctrl-btn {
+    width: 100%;
+  }
+
+  .controls-header h2 {
+    font-size: 16px;
+  }
+
+  .react-frame-container {
+    margin: 8px;
+  }
+}

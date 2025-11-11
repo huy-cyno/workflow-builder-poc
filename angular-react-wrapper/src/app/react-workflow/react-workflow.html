@@ -1,0 +1,49 @@
+<div class="wrapper-container">
+  <!-- Angular Controls Panel -->
+  <div class="angular-controls">
+    <div class="controls-header">
+      <h2>Angular Wrapper Controls</h2>
+      <span class="tech-badge angular">Angular</span>
+    </div>
+
+    <div class="controls-content">
+      <p class="info-text">
+        This Angular app embeds the React workflow builder. Use the buttons below to communicate with it.
+      </p>
+
+      <div class="button-group">
+        <button class="ctrl-btn primary" (click)="testLoadSampleWorkflow()">
+          📥 Load Sample from Angular
+        </button>
+
+        <button class="ctrl-btn secondary" (click)="saveWorkflow()">
+          💾 Trigger Save in React
+        </button>
+
+        <button class="ctrl-btn danger" (click)="clearWorkflow()">
+          🗑️ Clear React Workflow
+        </button>
+      </div>
+
+      <div class="info-box">
+        <strong>Communication Status:</strong> Check browser console for messages between Angular ↔️ React
+      </div>
+    </div>
+  </div>
+
+  <!-- React App Iframe -->
+  <div class="react-frame-container">
+    <div class="frame-header">
+      <span class="tech-badge react">React + React Flow</span>
+      <span class="status-indicator">● Live</span>
+    </div>
+
+    <iframe
+      #reactFrame
+      [src]="reactAppUrl"
+      class="react-iframe"
+      title="React Workflow Builder"
+      frameborder="0">
+    </iframe>
+  </div>
+</div>

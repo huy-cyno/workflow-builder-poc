@@ -8,7 +8,7 @@ This document explains the Angular implementations of the Workflow Builder and h
 workflow-builder-poc/
 ├── src/                      # ✅ React + React Flow (MAIN - Feature Complete)
 ├── angular-drawflow/         # ✅ Angular + Drawflow (COMPLETED)
-└── angular-react-wrapper/    # 📝 Angular wrapping React (Guide below)
+└── angular-react-wrapper/    # ✅ Angular wrapping React (COMPLETED)
 ```
 
 ## 🎯 Three Approaches
@@ -78,54 +78,47 @@ npm start
 
 ---
 
-### 3. Angular Wrapper for React App 📝
-**Location:** `angular-react-wrapper/` (to be created)
-**Status:** Guide provided below
+### 3. Angular Wrapper for React App ✅
+**Location:** `angular-react-wrapper/`
+**Status:** ✅ Completed and working
 
-**Concept:**
-Embed the React Flow PoC inside an Angular application using Web Components or iframe.
+**Implementation:**
+Embeds the complete React Flow PoC inside an Angular application using iframe with postMessage communication bridge.
+
+**Features:**
+- Angular control panel with test buttons
+- React app embedded in iframe
+- Two-way communication (Angular ↔️ React)
+- Load workflows from Angular
+- Trigger save/clear in React
+- Full React Flow features available
 
 **Best For:**
 - Angular projects that need React Flow features
-- Gradual migration
+- Gradual migration from React to Angular
 - Leveraging existing React code
+- Teams with both frameworks
 
-**Two Approaches:**
-
-#### Option A: Web Components (Recommended)
-Use `@angular/elements` to wrap React or `react-to-webcomponent`.
-
+**Run:**
 ```bash
-# In React project
-npm install react-to-webcomponent
-
-# Create Web Component wrapper
-# Then import in Angular
+cd angular-react-wrapper
+npm install
+npm start
+# Opens at http://localhost:4200
+# React app embedded inside
 ```
 
-#### Option B: Iframe Embedding
-Simple but isolated:
-
-```typescript
-// Angular component
-<iframe src="http://localhost:3000"
-        width="100%"
-        height="800px"
-        frameborder="0">
-</iframe>
-```
-
-**Communication:**
+**Communication API:**
 ```typescript
 // Angular -> React
-iframe.contentWindow.postMessage({ type: 'LOAD_WORKFLOW', data: workflow });
+loadWorkflow(workflow);    // Load data into React
+saveWorkflow();           // Trigger save in React
+clearWorkflow();          // Clear React workflow
 
-// React -> Angular
-window.addEventListener('message', (event) => {
-  if (event.data.type === 'WORKFLOW_SAVED') {
-    console.log(event.data.workflow);
-  }
-});
+// React -> Angular (automatic)
+WORKFLOW_SAVED           // React saved workflow
+NODE_SELECTED            // User selected node
+REACT_APP_READY          // React loaded
 ```
 
 ---
@@ -258,13 +251,14 @@ See `CLAUDE.md` for detailed instructions on extending the React version.
 
 - ✅ React Flow PoC with full features
 - ✅ Angular Drawflow PoC with basic features
-- ✅ Both can save/load JSON
-- ✅ Both have similar UI/UX
-- ✅ Both support custom nodes
+- ✅ Angular React Wrapper with postMessage bridge
+- ✅ All three can save/load JSON
+- ✅ All have similar UI/UX
+- ✅ All support custom nodes
 
 ## 🔜 Future Enhancements
 
-- [ ] Angular Wrapper implementation
+- [x] Angular Wrapper implementation
 - [ ] Shared workflow JSON format
 - [ ] Cross-framework data sync
 - [ ] Unified documentation
