@@ -8,16 +8,19 @@
 **Purpose:** React Flow-based workflow builder that replicates Sumsub's cockpit.sumsub.com interface
 **Tech Stack:** React 18 + React Flow 11
 **Created:** January 2025
-**Status:** ✅ Working PoC - Ready for development
+**Version:** 0.2.0
+**Status:** ✅ Working PoC with Node Editing - Ready for development
 
 ## 🎯 Project Goal
 
 Create a visual workflow builder similar to Sumsub's verification workflow system where users can:
 - Drag and drop nodes to create workflows
 - Connect nodes to define process flow
+- **Edit node properties in real-time** with comprehensive editor panel
 - Save/load workflows as JSON
 - Analyze workflow structure
 - See visual representation of complex verification flows
+- Test execute workflows with simulation
 
 ## 🏗️ Architecture
 
@@ -142,12 +145,20 @@ src/
 │   ├── Manages nodes/edges state
 │   ├── Handles connections (onConnect)
 │   ├── Add/delete nodes
+│   ├── Update node data (onUpdateNode)
 │   ├── Save/load/analyze workflows
+│   ├── Node click & double-click handlers
 │   └── Defines node types
 │
 ├── components/
-│   ├── Toolbar.js           # Top bar with Save/Load/Analyze/Delete
-│   └── Sidebar.js           # Left panel with node templates
+│   ├── Toolbar.js           # Top bar with Save/Load/Analyze/Delete/Edit
+│   ├── Sidebar.js           # Left panel with node templates
+│   ├── NodeEditor.js        # ⭐ NEW: Right panel for editing nodes
+│   │   ├── Edit all node properties
+│   │   ├── Dynamic branch/action management
+│   │   ├── Level step configuration
+│   │   └── Modern card-based UI
+│   └── ExecutionDemo.js     # Workflow execution simulator
 │
 └── nodes/
     ├── LevelNode.js         # Verification level step
@@ -404,7 +415,11 @@ useEffect(() => {
 ## 📝 TODOs & Future Enhancements
 
 ### High Priority
-- [ ] Node editing panel (click node to edit properties)
+- [x] Node editing panel (click node to edit properties) ✅ **COMPLETED v0.2.0**
+  - Double-click nodes to open editor
+  - Edit button in toolbar
+  - Dynamic branch/action management
+  - Modern slide-in panel with card-based UI
 - [ ] Validation (prevent cycles, ensure connected flow)
 - [ ] Undo/Redo functionality
 - [ ] Zoom to fit button
@@ -412,7 +427,7 @@ useEffect(() => {
 
 ### Medium Priority
 - [ ] Drag nodes from sidebar (currently click to add)
-- [ ] Multiple condition branches (currently 1 + else)
+- [x] Multiple condition branches ✅ **COMPLETED v0.2.0** - Can now add/remove branches dynamically
 - [ ] Copy/paste nodes
 - [ ] Node search/filter
 - [ ] Keyboard shortcuts (Del to delete, Ctrl+S to save)
@@ -460,7 +475,7 @@ const onSave = useCallback(async () => {
 1. **No validation** - Users can create invalid flows (cycles, disconnected nodes)
 2. **No auto-save** - Changes lost on page refresh
 3. **Fixed node positions** - Random placement when adding nodes
-4. **No node editing** - Can't edit node properties after creation
+4. ~~**No node editing**~~ ✅ **FIXED in v0.2.0** - Full node editor panel now available
 5. **Simple JSON export** - No version control or diff
 6. **No authentication** - Anyone can load any workflow
 

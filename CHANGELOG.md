@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2025-01-11
+
+### Added
+- ✅ **NodeEditor Panel** - Comprehensive right-side panel for editing node properties
+  - Double-click nodes to open editor
+  - Edit button in toolbar when node is selected
+  - Support for all node types (Level, Condition, Action)
+  - Dynamic add/remove branches for Condition nodes
+  - Dynamic add/remove actions for Action nodes
+  - Configure Level steps and types with checkboxes
+  - Beautiful slide-in animation from right
+  - Modern card-based UI design
+
+### Improved
+- ✅ **Toolbar Button Consistency** - All buttons now have uniform height and alignment
+  - Fixed Load button vertical positioning
+  - Consistent 40px height across all buttons
+  - Improved padding and spacing
+  - Added gradient backgrounds to primary/danger buttons
+  - Better hover effects with smooth transitions
+
+- ✅ **Overall UI Polish**
+  - Modern color palette with better contrast
+  - Consistent 8px border-radius throughout
+  - Professional shadows and hover states
+  - Better form input focus states with blue glow
+  - Clean, organized layout with proper spacing
+
+### Technical
+- ✅ Added `onNodeDoubleClick` handler for quick editing
+- ✅ Added `onUpdateNode` callback for node data updates
+- ✅ Integrated NodeEditor with main App state management
+- ✅ Improved toolbar flex alignment
+
 ## [0.1.0] - 2025-01-10
 
 ### Added - Initial Release
@@ -25,7 +59,7 @@ All notable changes to this project will be documented in this file.
 - ✅ Inline code comments
 
 ### Known Limitations
-- No node property editing after creation
+- ~~No node property editing after creation~~ ✅ FIXED in v0.2.0
 - No validation for invalid flows
 - Random node placement when adding
 - No auto-save functionality
@@ -35,7 +69,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - Future Features
 
 ### Planned
-- [ ] Node property editor panel
+- [x] Node property editor panel ✅ COMPLETED in v0.2.0
 - [ ] Flow validation (prevent cycles, disconnected nodes)
 - [ ] Auto-save with LocalStorage
 - [ ] Undo/Redo stack
@@ -61,6 +95,7 @@ All notable changes to this project will be documented in this file.
 
 ## Version History
 
+- **0.2.0** (2025-01-11) - Node Editor & UI improvements
 - **0.1.0** (2025-01-10) - Initial PoC release
 
 ---
@@ -80,4 +115,4 @@ When making changes:
 
 ---
 
-Last Updated: 2025-01-10
+Last Updated: 2025-01-11

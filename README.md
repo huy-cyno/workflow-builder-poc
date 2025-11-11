@@ -6,13 +6,16 @@ A React Flow-based workflow builder that replicates the Sumsub cockpit interface
 
 - ✅ Custom node types (Level, Condition, Action)
 - ✅ Visual node handles for connections
-- ✅ Sidebar for adding nodes
+- ✅ **Node Editor Panel** - Edit node properties with slide-in panel
+- ✅ Sidebar for adding nodes with action presets
 - ✅ Save/Load workflow as JSON
 - ✅ Workflow analysis (shows connections in console)
 - ✅ MiniMap and Controls
-- ✅ Styled like Sumsub interface
+- ✅ Modern, polished UI with consistent button styling
 - ✅ Selected node highlighting
 - ✅ Start badge for first node
+- ✅ Double-click nodes to edit properties
+- ✅ Dynamic branch and action management
 
 ## Installation
 
@@ -30,13 +33,18 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## How to Use
 
-1. **Add nodes** - Click on node types in the sidebar
+1. **Add nodes** - Click on node types in the sidebar (or use action presets)
 2. **Connect nodes** - Drag from one handle (circle on node edge) to another
 3. **Select node** - Click on a node to select it
-4. **Delete node** - Select a node and click "Delete" button in toolbar
-5. **Save workflow** - Click "Save" to download workflow as JSON file
-6. **Load workflow** - Click "Load" to import a JSON workflow file
-7. **Analyze workflow** - Click "Analyze" to see connections in browser console
+4. **Edit node** - Double-click a node OR select it and click "Edit" button in toolbar
+   - Edit labels, conditions, branches, actions
+   - Add/remove branches dynamically
+   - Configure level steps and types
+5. **Delete node** - Select a node and click "Delete" button in toolbar
+6. **Save workflow** - Click "Save" to download workflow as JSON file
+7. **Load workflow** - Click "Load" to import a JSON workflow file
+8. **Analyze workflow** - Click "Analyze" to see connections in browser console
+9. **Test Execute** - Click "Test Execute" to simulate workflow execution
 
 ## Project Structure
 
@@ -46,16 +54,20 @@ workflow-builder-poc/
 │   └── index.html
 ├── src/
 │   ├── components/
-│   │   ├── Sidebar.js
+│   │   ├── Sidebar.js              # Left panel for adding nodes
 │   │   ├── Sidebar.css
-│   │   ├── Toolbar.js
-│   │   └── Toolbar.css
+│   │   ├── Toolbar.js              # Top toolbar with actions
+│   │   ├── Toolbar.css
+│   │   ├── NodeEditor.js           # ⭐ NEW: Right panel for editing nodes
+│   │   ├── NodeEditor.css          # ⭐ NEW: Modern styled editor
+│   │   ├── ExecutionDemo.js        # Workflow execution simulator
+│   │   └── ExecutionDemo.css
 │   ├── nodes/
-│   │   ├── LevelNode.js
-│   │   ├── ConditionNode.js
-│   │   ├── ActionNode.js
+│   │   ├── LevelNode.js            # Verification level node
+│   │   ├── ConditionNode.js        # Conditional branching node
+│   │   ├── ActionNode.js           # Action execution node
 │   │   └── NodeStyles.css
-│   ├── App.js
+│   ├── App.js                      # Main application logic
 │   ├── App.css
 │   ├── index.js
 │   └── index.css
