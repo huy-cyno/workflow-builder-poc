@@ -15,6 +15,7 @@ import ConditionNode from './nodes/ConditionNode';
 import ActionNode from './nodes/ActionNode';
 import Sidebar from './components/Sidebar';
 import Toolbar from './components/Toolbar';
+import ExecutionDemo from './components/ExecutionDemo';
 import './App.css';
 
 const nodeTypes = {
@@ -44,6 +45,7 @@ function WorkflowBuilder() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState(null);
+  const [showExecutionDemo, setShowExecutionDemo] = useState(false);
 
   // Handle connection between nodes
   const onConnect = useCallback(
@@ -169,6 +171,11 @@ function WorkflowBuilder() {
     alert('Check console for workflow analysis!');
   }, [nodes, edges]);
 
+  // Test execute workflow
+  const onTestExecute = useCallback(() => {
+    setShowExecutionDemo(true);
+  }, []);
+
   return (
     <div className="workflow-container">
       <Toolbar
@@ -176,6 +183,7 @@ function WorkflowBuilder() {
         onLoad={onLoad}
         onAnalyze={onAnalyze}
         onDelete={onDeleteNode}
+        onTestExecute={onTestExecute}
         selectedNode={selectedNode}
       />
 
@@ -210,6 +218,13 @@ function WorkflowBuilder() {
           </ReactFlow>
         </div>
       </div>
+
+      {showExecutionDemo && (
+        <ExecutionDemo
+          workflow={{ nodes, edges }}
+          onClose={() => setShowExecutionDemo(false)}
+        />
+      )}
     </div>
   );
 }

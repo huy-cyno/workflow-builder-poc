@@ -56,6 +56,18 @@
   transform: translateY(0);
 }
 
+.btn-primary {
+  background: linear-gradient(135deg, #68CD86 0%, #5BC278 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(104, 205, 134, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5BC278 0%, #4FB56A 100%);
+  box-shadow: 0 4px 12px rgba(104, 205, 134, 0.4);
+}
+
 .btn-secondary {
   background: #f8f9fa;
   color: #2d3748;

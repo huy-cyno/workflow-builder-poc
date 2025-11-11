@@ -1,7 +1,7 @@
 import React from 'react';
 import './Toolbar.css';
 
-function Toolbar({ onSave, onLoad, onAnalyze, onDelete, selectedNode }) {
+function Toolbar({ onSave, onLoad, onAnalyze, onDelete, onTestExecute, selectedNode }) {
   return (
     <div className="toolbar">
       <div className="toolbar-left">
@@ -10,6 +10,10 @@ function Toolbar({ onSave, onLoad, onAnalyze, onDelete, selectedNode }) {
       </div>
 
       <div className="toolbar-right">
+        <button className="btn btn-primary" onClick={onTestExecute}>
+          🚀 Test Execute
+        </button>
+
         <button className="btn btn-secondary" onClick={onAnalyze}>
           🔍 Analyze
         </button>

@@ -26,7 +26,6 @@ function ConditionNode({ data, selected }) {
               position={Position.Right}
               id={`branch-${idx}`}
               className="node-handle branch-handle"
-              style={{ top: `${30 + idx * 60}px` }}
             />
           </div>
         ))}
@@ -38,7 +37,6 @@ function ConditionNode({ data, selected }) {
             position={Position.Right}
             id="else"
             className="node-handle else-handle"
-            style={{ top: `${30 + data.branches.length * 60}px` }}
           />
         </div>
       </div>
