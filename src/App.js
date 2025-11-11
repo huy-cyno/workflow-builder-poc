@@ -28,18 +28,114 @@ const initialNodes = [
   {
     id: 'level-1',
     type: 'level',
-    position: { x: 50, y: 150 },
+    position: { x: 50, y: 100 },
     data: {
-      label: 'Level step 1',
-      levelName: 'Collect particulars',
+      label: 'Collect User Data',
+      levelName: 'Identity Collection',
       levelType: 'Individuals',
-      steps: ['APPLICANT_DATA'],
+      steps: ['APPLICANT_DATA', 'IDENTITY'],
       isStart: true
+    },
+  },
+  {
+    id: 'condition-1',
+    type: 'condition',
+    position: { x: 350, y: 100 },
+    data: {
+      label: 'Risk Assessment',
+      branches: [
+        {
+          name: 'High Risk',
+          condition: 'riskScore >= 70'
+        }
+      ]
+    },
+  },
+  {
+    id: 'action-high',
+    type: 'action',
+    position: { x: 650, y: 50 },
+    data: {
+      label: 'High Risk Actions',
+      actions: [
+        {
+          type: 'createCase',
+          title: 'Create manual review case',
+          value: 'Compliance Team'
+        },
+        {
+          type: 'sendEmail',
+          title: 'Alert compliance team',
+          value: 'compliance@company.com'
+        },
+        {
+          type: 'log',
+          title: 'Log risk event',
+          value: 'High risk user detected'
+        }
+      ]
+    },
+  },
+  {
+    id: 'action-low',
+    type: 'action',
+    position: { x: 650, y: 250 },
+    data: {
+      label: 'Auto-Approve Actions',
+      actions: [
+        {
+          type: 'approve',
+          title: 'Auto-approve user',
+          value: ''
+        },
+        {
+          type: 'sendWebhook',
+          title: 'Notify partner system',
+          value: 'https://api.partner.com/webhook'
+        },
+        {
+          type: 'sendEmail',
+          title: 'Welcome email',
+          value: 'user@example.com'
+        },
+        {
+          type: 'notify',
+          title: 'Push notification',
+          value: 'Account approved!'
+        }
+      ]
     },
   },
 ];
 
-const initialEdges = [];
+const initialEdges = [
+  {
+    id: 'e1-2',
+    source: 'level-1',
+    target: 'condition-1',
+    type: 'smoothstep',
+    animated: false,
+    style: { stroke: '#6D9DFF', strokeWidth: 2 }
+  },
+  {
+    id: 'e2-3',
+    source: 'condition-1',
+    target: 'action-high',
+    sourceHandle: 'branch-0',
+    type: 'smoothstep',
+    animated: false,
+    style: { stroke: '#FF6B9D', strokeWidth: 2 }
+  },
+  {
+    id: 'e2-4',
+    source: 'condition-1',
+    target: 'action-low',
+    sourceHandle: 'else',
+    type: 'smoothstep',
+    animated: false,
+    style: { stroke: '#27AE60', strokeWidth: 2 }
+  }
+];
 
 function WorkflowBuilder() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -62,7 +158,7 @@ function WorkflowBuilder() {
   );
 
   // Add new node from sidebar
-  const onAddNode = useCallback((type) => {
+  const onAddNode = useCallback((type, customData) => {
     const newNode = {
       id: `${type}-${Date.now()}`,
       type: type,
@@ -70,7 +166,7 @@ function WorkflowBuilder() {
         x: Math.random() * 400 + 100,
         y: Math.random() * 300 + 100,
       },
-      data: getDefaultNodeData(type),
+      data: customData || getDefaultNodeData(type),
     };
     setNodes((nds) => [...nds, newNode]);
   }, [setNodes]);
@@ -262,12 +358,17 @@ function getDefaultNodeData(type) {
       };
     case 'action':
       return {
-        label: 'Action',
+        label: 'Actions',
         actions: [
           {
-            type: 'createCase',
-            title: 'Create case',
-            value: ''
+            type: 'sendEmail',
+            title: 'Send notification email',
+            value: 'user@example.com'
+          },
+          {
+            type: 'log',
+            title: 'Log completion',
+            value: 'User verification completed'
           }
         ]
       };

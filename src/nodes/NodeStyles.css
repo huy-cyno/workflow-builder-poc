@@ -138,6 +138,7 @@
 /* Action Node */
 .action-node {
   border-color: #68CD86;
+  min-width: 240px;
 }
 
 .action-header {
@@ -149,25 +150,63 @@
 .action-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .action-item {
-  padding: 8px;
+  padding: 10px;
   background: #f8f9fa;
   border-radius: 6px;
+  border-left: 3px solid #68CD86;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.action-item:hover {
+  background: #e9ecef;
+  transform: translateX(2px);
+}
+
+.action-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.action-icon {
+  font-size: 16px;
+  line-height: 1;
 }
 
 .action-title {
   font-size: 12px;
   font-weight: 600;
   color: #2d3748;
-  margin-bottom: 4px;
+  flex: 1;
 }
 
 .action-value {
   font-size: 11px;
   color: #666;
+  margin-left: 24px;
+  margin-bottom: 6px;
+  padding: 4px 6px;
+  background: white;
+  border-radius: 3px;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.action-type-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 24px;
 }
 
 /* Node Handles */
