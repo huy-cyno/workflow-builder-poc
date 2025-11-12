@@ -237,15 +237,19 @@ function WorkflowBuilder() {
 
   // Add new node from sidebar
   const onAddNode = useCallback((type, customData) => {
+    const xPos = Math.random() * 400 + 100;
+    const yPos = Math.random() * 300 + 100;
+
     const newNode = {
       id: `${type}-${Date.now()}`,
       type: type,
       position: {
-        x: Math.random() * 400 + 100,
-        y: Math.random() * 300 + 100,
+        x: Number.isFinite(xPos) ? xPos : 250,
+        y: Number.isFinite(yPos) ? yPos : 250,
       },
       data: customData || getDefaultNodeData(type),
     };
+    console.log('Adding node:', newNode);
     setNodes((nds) => [...nds, newNode]);
   }, [setNodes]);
 
@@ -317,7 +321,15 @@ function WorkflowBuilder() {
     reader.onload = (e) => {
       try {
         const workflow = JSON.parse(e.target.result);
-        setNodes(workflow.nodes || []);
+        // Ensure all nodes have valid positions
+        const validatedNodes = (workflow.nodes || []).map((node) => ({
+          ...node,
+          position: {
+            x: Number.isFinite(node.position?.x) ? node.position.x : 250,
+            y: Number.isFinite(node.position?.y) ? node.position.y : 250,
+          },
+        }));
+        setNodes(validatedNodes);
         setEdges(workflow.edges || []);
         alert('Workflow loaded successfully!');
       } catch (error) {

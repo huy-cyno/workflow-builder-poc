@@ -1,0 +1,45 @@
+<div class="toolbar">
+  <div class="toolbar-left">
+    <h1 class="toolbar-title">Workflow Builder - ngx-vflow POC</h1>
+  </div>
+
+  <div class="toolbar-center">
+    <div class="button-group">
+      <button class="toolbar-button" (click)="onAddLevelNode()" title="Add Level Step">
+        <span class="button-icon">💾</span>
+        Level
+      </button>
+      <button class="toolbar-button" (click)="onAddConditionNode()" title="Add Condition">
+        <span class="button-icon">🔀</span>
+        Condition
+      </button>
+      <button class="toolbar-button" (click)="onAddActionNode()" title="Add Action">
+        <span class="button-icon">⚡</span>
+        Action
+      </button>
+    </div>
+  </div>
+
+  <div class="toolbar-right">
+    <button
+      class="toolbar-button delete-button"
+      (click)="onDelete()"
+      [class.disabled]="!selectedNodeId"
+      title="Delete selected node"
+    >
+      🗑️ Delete
+    </button>
+    <button class="toolbar-button" (click)="onClickAnalyze()" title="Analyze workflow">
+      📊 Analyze
+    </button>
+    <button class="toolbar-button" (click)="onClickExecute()" title="Execute workflow">
+      ▶️ Execute
+    </button>
+    <button class="toolbar-button" (click)="onSave.emit()" title="Save workflow as JSON">
+      💾 Save
+    </button>
+    <button class="toolbar-button" (click)="onLoad.emit()" title="Load workflow from JSON">
+      📂 Load
+    </button>
+  </div>
+</div>

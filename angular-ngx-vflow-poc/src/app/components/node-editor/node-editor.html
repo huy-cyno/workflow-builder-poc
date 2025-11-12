@@ -1,0 +1,160 @@
+<div class="node-editor-panel">
+  <div class="editor-header">
+    <h3 class="editor-title">Edit Node</h3>
+    <button class="close-button" (click)="close()">✕</button>
+  </div>
+
+  <div class="editor-content">
+    <!-- Level Node Editor -->
+    <div *ngIf="node?.type === 'level'" class="editor-section">
+      <div class="form-group">
+        <label>Node Label</label>
+        <input
+          type="text"
+          [(ngModel)]="node!.data.label"
+          (change)="updateNodeData('label', node!.data.label)"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Level Name</label>
+        <input
+          type="text"
+          [(ngModel)]="node!.data.levelName"
+          (change)="updateNodeData('levelName', node!.data.levelName)"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Level Type</label>
+        <select [(ngModel)]="node!.data.levelType" class="form-input">
+          <option value="Individuals">Individuals</option>
+          <option value="Companies">Companies</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="node!.data.isStart" />
+          Is Start Node
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Steps</label>
+        <div class="items-list">
+          <div *ngFor="let step of node!.data.steps; let i = index" class="item-row">
+            <input
+              type="text"
+              [(ngModel)]="node!.data.steps[i]"
+              class="form-input"
+            />
+            <button
+              type="button"
+              (click)="removeStep(i)"
+              class="remove-button"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+        <button type="button" (click)="addStep()" class="add-button">
+          + Add Step
+        </button>
+      </div>
+    </div>
+
+    <!-- Condition Node Editor -->
+    <div *ngIf="node?.type === 'condition'" class="editor-section">
+      <div class="form-group">
+        <label>Node Label</label>
+        <input
+          type="text"
+          [(ngModel)]="node!.data.label"
+          (change)="updateNodeData('label', node!.data.label)"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Branches</label>
+        <div class="items-list">
+          <div *ngFor="let branch of node!.data.branches; let i = index" class="branch-editor">
+            <input
+              type="text"
+              [(ngModel)]="branch.name"
+              placeholder="Branch name"
+              class="form-input"
+            />
+            <textarea
+              [(ngModel)]="branch.condition"
+              placeholder="Condition expression"
+              class="form-textarea"
+            ></textarea>
+            <button
+              type="button"
+              (click)="removeBranch(i)"
+              class="remove-button"
+            >
+              ✕ Remove
+            </button>
+          </div>
+        </div>
+        <button type="button" (click)="addBranch()" class="add-button">
+          + Add Branch
+        </button>
+      </div>
+    </div>
+
+    <!-- Action Node Editor -->
+    <div *ngIf="node?.type === 'action'" class="editor-section">
+      <div class="form-group">
+        <label>Node Label</label>
+        <input
+          type="text"
+          [(ngModel)]="node!.data.label"
+          (change)="updateNodeData('label', node!.data.label)"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Actions</label>
+        <div class="items-list">
+          <div *ngFor="let action of node!.data.actions; let i = index" class="action-editor">
+            <input
+              type="text"
+              [(ngModel)]="action.title"
+              placeholder="Action title"
+              class="form-input"
+            />
+            <input
+              type="text"
+              [(ngModel)]="action.type"
+              placeholder="Action type"
+              class="form-input"
+            />
+            <textarea
+              [(ngModel)]="action.value"
+              placeholder="Action value/details"
+              class="form-textarea"
+            ></textarea>
+            <button
+              type="button"
+              (click)="removeAction(i)"
+              class="remove-button"
+            >
+              ✕ Remove
+            </button>
+          </div>
+        </div>
+        <button type="button" (click)="addAction()" class="add-button">
+          + Add Action
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

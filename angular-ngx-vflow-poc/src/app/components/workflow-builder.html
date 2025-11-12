@@ -1,0 +1,75 @@
+<div class="workflow-container">
+  <app-toolbar
+    (onAddNode)="onAddNode($event)"
+    (onDeleteNode)="onDeleteNode($event)"
+    (onAnalyze)="onAnalyzeWorkflow()"
+    (onSave)="onSaveWorkflow()"
+    (onLoad)="onLoadWorkflow()"
+    [selectedNodeId]="selectedNode?.id"
+  ></app-toolbar>
+
+  <div class="workflow-content">
+    <app-sidebar
+      (onNodeSelected)="onAddNode($event)"
+      (onTemplateSelected)="onLoadTemplate($event)"
+      [availableTemplates]="getAvailableTemplates()"
+    ></app-sidebar>
+
+    <div class="flow-container">
+      <vflow
+        [nodes]="nodes"
+        [edges]="edges"
+      >
+        <ng-template #nodeContent let-node="node">
+          <div *ngIf="node.x !== undefined && node.y !== undefined" [ngClass]="node.type + '-node'" class="workflow-node">
+            <div class="node-header">
+              <span class="node-icon">
+                {{ node.type === 'level' ? '💾' : node.type === 'condition' ? '🔀' : '⚡' }}
+              </span>
+              <span class="node-title">{{ node.label }}</span>
+              <span *ngIf="node.workflowData?.isStart" class="start-badge">Start</span>
+            </div>
+
+            <!-- Level Node Content -->
+            <div *ngIf="node.type === 'level'" class="node-content">
+              <strong>{{ node.workflowData?.levelName }}</strong>
+              <small>{{ node.workflowData?.levelType }}</small>
+              <div class="node-steps">
+                <span *ngFor="let step of node.workflowData?.steps" class="step-tag">
+                  {{ step }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Condition Node Content -->
+            <div *ngIf="node.type === 'condition'" class="node-content">
+              <div *ngFor="let branch of node.workflowData?.branches" class="branch-item">
+                <strong>{{ branch.name }}</strong>
+                <small>{{ branch.condition }}</small>
+              </div>
+              <div class="branch-item else-branch">
+                <strong>Else</strong>
+                <small>Default</small>
+              </div>
+            </div>
+
+            <!-- Action Node Content -->
+            <div *ngIf="node.type === 'action'" class="node-content">
+              <div *ngFor="let action of node.workflowData?.actions" class="action-item">
+                <strong>{{ action.title }}</strong>
+                <small>{{ action.type }}</small>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </vflow>
+    </div>
+
+    <app-node-editor
+      *ngIf="selectedNode"
+      [node]="selectedNode"
+      (onUpdate)="onAddNode($event)"
+      (onClose)="selectedNode = null"
+    ></app-node-editor>
+  </div>
+</div>
